@@ -1,19 +1,22 @@
 plugins {
-    id 'java'
+    id 'application'
 }
 
-group 'org.example'
+group 'org.bedu'
 version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
 }
 
-dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+test {
+    useTestNG() {
+        useDefaultListeners = true
+    }
 }
 
-test {
-    useJUnitPlatform()
+dependencies {
+    testImplementation 'org.testng:testng:7.7.0'
+    implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
+    implementation 'org.seleniumhq.selenium:selenium-support:3.141.59'
 }
