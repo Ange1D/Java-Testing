@@ -1,0 +1,44 @@
+# BDD (Behavior Driven Development)
+# https://cucumber.io/
+# Gherkin
+
+
+Actores:
+Usuario
+
+Precondiciones:
+Un usuario con una tarjeta que tiene $1000 y un pin de "12345"
+
+1. Ingresa la tarjeta
+2. Ingresa su pin
+  2.1 El pin es correcto
+3. Selecciona la opción de cambio de pin
+4. Ingresa su nuevo pin "0000"
+  4.1 Se actualiza con éxito
+5. Retira su tarjeta
+
+
+GIVEN-WHEN-THEN
+
+(Dado, Cuando, Entonces)
+
+Dada una tarjeta con $1000 pesos y pin de "12345"
+Cuando se inserta la tarjeta
+Y se ingresa el pin "12345"
+Y se actualiza el pin a "0000"
+Entonces el pin de la tarjeta ha sido modificado
+
+
+-------------------------------------------------------
+
+Dado una tarjeta con $1000 pesos y pin de "12345"
+Cuando se inserta la tarjeta y el pin "12345"
+Y se solicita retirar $300 pesos
+Entonces el cajero entrega el dinero
+
+-------------------------------------------------------
+
+Dado una tarjeta con $1000 pesos y pin de "12345"
+Cuando se inserta la tarjeta y el pin "12345"
+Y se solicita retirar $2000 pesos
+Entonces el cajero muestra un error indicando que no hay suficiente dinero
