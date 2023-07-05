@@ -1,8 +1,8 @@
 plugins {
-    id 'java'
+    id 'application'
 }
 
-group 'org.example'
+group 'org.bedu'
 version '1.0-SNAPSHOT'
 
 repositories {
