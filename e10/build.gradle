@@ -1,8 +1,8 @@
 plugins {
     id 'application'
-    id 'jacoco' // Utilizamos el plugin de Gradle para JaCoCo
-    id 'pmd' // Utilizamos el plugin de Gradle para PMD
-    // Agrega dos comandos "pmdMain" y "pmdTest"
+    id 'jacoco'
+    // Plugin de sonarqube
+    id "org.sonarqube" version "4.2.1.3168"
 }
 
 group 'org.bedu'
@@ -12,31 +12,21 @@ repositories {
     mavenCentral()
 }
 
-// Nueva tarea que ejecuta "jacoco" para validar la cobertura de código de las pruebas.
-task coverage {
-    dependsOn test // Al ejecutar el comando "gradle coverage" ejecute primero "gradle test"
-    dependsOn jacocoTestReport // Generar el reporte al ejecutar el comando "gradle coverage"
-    finalizedBy jacocoTestCoverageVerification // Verifica que se cumpla la cobertura configurada
-}
-
-// Configurar el límite de la cobertura mínima necesaria
-// para garantizar la calidad de las pruebas.
-jacocoTestCoverageVerification {
-    violationRules {
-        rule {
-            limit {
-                minimum = 0.95 // 95%
-            }
-        }
+// Configurar Jacoco para obtener el reporte en formato XML
+jacocoTestReport {
+    reports {
+        xml.required = true // Genere el resultado del reporte en XML
     }
 }
 
-// Configurar PMD para utilizar las reglas de:
-// 1. Best Practices (category/java/bestpractices.xml)
-// 2. Code Style
-pmd {
-    ruleSetFiles = files("${projectDir}/src/test/resources/pmd-rules.xml")
+// Configurar Sonarqube para indicar dónde se encuentra
+// el reporte en XML de Jacoco
+sonar {
+    properties {
+        property "sonar.jacoco.reportPaths", "build/reports/jacoco/test"
+    }
 }
+
 
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.9.3'
@@ -46,4 +36,6 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    // Una vez finalizada la ejecución de las pruebas
+    finalizedBy jacocoTestReport
 }
